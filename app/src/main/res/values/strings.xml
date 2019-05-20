@@ -16,4 +16,5 @@
     <string name="informe_campos">Informe todos os campos</string>
     <string name="erro_inesperado">Algo de errado aconteceu, tente novamente</string>
     <string name="email_uso">Email já em uso</string>
+    <string name="entrar">Entrar</string>
 </resources>
