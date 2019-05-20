@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TaskProject</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="tx_drawer_done">Feitas</string>
+    <string name="tx_drawer_todo">Pendentes</string>
+    <string name="tx_drawer_logout">Sair</string>
+    <string name="tx_edithint_nome">Nome</string>
+    <string name="txt_edithint_email">Email</string>
+    <string name="tx_edithint_pass">Senha</string>
+    <string name="tx_cadastrar">Cadastrar</string>
+    <string name="informe_campos">Informe todos os campos</string>
+    <string name="erro_inesperado">Algo de errado aconteceu, tente novamente</string>
+    <string name="email_uso">Email já em uso</string>
+</resources>
