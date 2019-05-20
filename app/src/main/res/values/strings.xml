@@ -17,4 +17,5 @@
     <string name="erro_inesperado">Algo de errado aconteceu, tente novamente</string>
     <string name="email_uso">Email já em uso</string>
     <string name="entrar">Entrar</string>
+    <string name="usuario_senha_incorretos">Usuário e/ou senha incorretos incorretos!</string>
 </resources>

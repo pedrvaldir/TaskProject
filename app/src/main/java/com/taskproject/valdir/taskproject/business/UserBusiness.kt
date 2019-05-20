@@ -14,12 +14,16 @@ class UserBusiness(val context: Context) {
     private val mUserRepository : UserRepository = UserRepository.getInstance(context)
     private val mSecurityPreferences: SecutiryPreferences = SecutiryPreferences(context)
 
-    fun login(email: String, password: String) {
+    fun login(email: String, password: String): Boolean {
         val user: UserEntity? = mUserRepository.get(email, password)
-        if (user != null){
+        return if (user != null){
             mSecurityPreferences.storeString(TaskConstants.KEY.USER_ID, user.id.toString())
             mSecurityPreferences.storeString(TaskConstants.KEY.USER_NAME, user.name)
             mSecurityPreferences.storeString(TaskConstants.KEY.USER_EMAIL, user.email)
+
+            true
+        }else{
+            false
         }
     }
 
