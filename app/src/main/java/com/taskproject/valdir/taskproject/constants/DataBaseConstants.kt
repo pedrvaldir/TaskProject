@@ -2,7 +2,7 @@ package com.taskproject.valdir.taskproject.constants
 
 class DataBaseConstants {
 
-    object USER{
+    object USER {
         val TABLE_NAME = "user"
 
         object COLUMNS {
@@ -12,4 +12,28 @@ class DataBaseConstants {
             val PASSWORD = "password"
         }
     }
+
+    object PRIORITY {
+        val TABLE_NAME = "priority"
+
+        object COLUMNS {
+            val ID = "id"
+            val DESCRIPTION = "description"
+        }
+    }
+
+    object TASK {
+        val TABLE_NAME = "task"
+
+        object COLUMNS {
+            val ID = "id"
+            val USERID = "userid"
+            val PRIORITYID = "priorityid"
+            val DESCRIPTION = "description"
+            val COMPLETE = "complete"
+            val DUEDATE = "duedate"
+        }
+    }
+
+
 }
