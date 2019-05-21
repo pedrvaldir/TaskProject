@@ -6,13 +6,13 @@ import com.taskproject.valdir.taskproject.constants.TaskConstants
 import com.taskproject.valdir.taskproject.entities.UserEntity
 import com.taskproject.valdir.taskproject.utils.ValidationException
 import com.taskproject.valdir.taskproject.repository.UserRepository
-import com.taskproject.valdir.taskproject.utils.SecutiryPreferences
+import com.taskproject.valdir.taskproject.utils.SecurityPreferences
 import java.lang.Exception
 
 class UserBusiness(val context: Context) {
 
     private val mUserRepository : UserRepository = UserRepository.getInstance(context)
-    private val mSecurityPreferences: SecutiryPreferences = SecutiryPreferences(context)
+    private val mSecurityPreferences: SecurityPreferences = SecurityPreferences(context)
 
     fun login(email: String, password: String): Boolean {
         val user: UserEntity? = mUserRepository.get(email, password)
@@ -48,6 +48,7 @@ class UserBusiness(val context: Context) {
         }catch (e: Exception){
             throw e
         }
-
     }
+
+
 }

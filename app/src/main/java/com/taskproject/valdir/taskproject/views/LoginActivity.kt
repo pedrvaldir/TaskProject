@@ -7,11 +7,14 @@ import android.view.View
 import android.widget.Toast
 import com.taskproject.valdir.taskproject.R
 import com.taskproject.valdir.taskproject.business.UserBusiness
+import com.taskproject.valdir.taskproject.constants.TaskConstants
+import com.taskproject.valdir.taskproject.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var  mUserBusiness: UserBusiness
+    private lateinit var mSecurityPreferences: SecurityPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,9 +22,23 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         //instanciar variaveis da classe
         mUserBusiness = UserBusiness(this)
+        mSecurityPreferences = SecurityPreferences(this)
 
 
         setListeners()
+
+        verifyLoggedUser()
+    }
+
+    private fun verifyLoggedUser() {
+        val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID)
+        val name = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_NAME)
+
+        //USUário logado
+        if (userId !="" && name != ""){
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     private fun setListeners() {

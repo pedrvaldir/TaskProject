@@ -3,7 +3,7 @@ package com.taskproject.valdir.taskproject.utils
 import android.content.Context
 import android.content.SharedPreferences
 
-class SecutiryPreferences (context: Context) {
+class SecurityPreferences (context: Context) {
 
     private val mSharedPreferences: SharedPreferences = context.getSharedPreferences("tasks", Context.MODE_PRIVATE)
 
