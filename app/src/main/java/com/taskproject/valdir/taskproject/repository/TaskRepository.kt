@@ -113,18 +113,66 @@ class TaskRepository private constructor(context: Context) {
     }
 
     fun insert(task: TaskEntity) {
-        val db = mTaskDataBaseHelper.writableDatabase
 
-        // se por acaso for true assuma o valor 1
-        val complete: Int = if (task.complete) 1 else 0
+        try {
+            val db = mTaskDataBaseHelper.writableDatabase
 
-        val insertValues = ContentValues()
-        insertValues.put(DataBaseConstants.TASK.COLUMNS.USERID, task.userId)
-        insertValues.put(DataBaseConstants.TASK.COLUMNS.PRIORITYID, task.priorityId)
-        insertValues.put(DataBaseConstants.TASK.COLUMNS.DESCRIPTION, task.description)
-        insertValues.put(DataBaseConstants.TASK.COLUMNS.DUEDATE, task.dueData)
-        insertValues.put(DataBaseConstants.TASK.COLUMNS.COMPLETE, complete)
+            // se por acaso for true assuma o valor 1
+            val complete: Int = if (task.complete) 1 else 0
 
-        db.insert(DataBaseConstants.TASK.TABLE_NAME, null, insertValues)
+            val insertValues = ContentValues()
+            insertValues.put(DataBaseConstants.TASK.COLUMNS.USERID, task.userId)
+            insertValues.put(DataBaseConstants.TASK.COLUMNS.PRIORITYID, task.priorityId)
+            insertValues.put(DataBaseConstants.TASK.COLUMNS.DESCRIPTION, task.description)
+            insertValues.put(DataBaseConstants.TASK.COLUMNS.DUEDATE, task.dueData)
+            insertValues.put(DataBaseConstants.TASK.COLUMNS.COMPLETE, complete)
+
+            db.insert(DataBaseConstants.TASK.TABLE_NAME, null, insertValues)
+        } catch (e: Exception) {
+            throw  e
+        }
+
     }
+
+    fun update(task: TaskEntity) {
+
+        try {
+            val db = mTaskDataBaseHelper.writableDatabase
+
+            // se por acaso for true assuma o valor 1
+            val complete: Int = if (task.complete) 1 else 0
+
+            val updateValues = ContentValues()
+            updateValues.put(DataBaseConstants.TASK.COLUMNS.USERID, task.userId)
+            updateValues.put(DataBaseConstants.TASK.COLUMNS.PRIORITYID, task.priorityId)
+            updateValues.put(DataBaseConstants.TASK.COLUMNS.DESCRIPTION, task.description)
+            updateValues.put(DataBaseConstants.TASK.COLUMNS.DUEDATE, task.dueData)
+            updateValues.put(DataBaseConstants.TASK.COLUMNS.COMPLETE, complete)
+
+            val selection =
+                "${DataBaseConstants.TASK.COLUMNS.ID} = ?"
+            // convertido para string, pois selectoinARgs espera Arraylist
+            val selectionArgs = arrayOf(task.id.toString())
+
+            db.update(DataBaseConstants.TASK.TABLE_NAME, updateValues, selection, selectionArgs)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    fun delete(id: Int) {
+        try {
+            val db = mTaskDataBaseHelper.writableDatabase
+
+            val where =
+                "${DataBaseConstants.TASK.COLUMNS.ID} = ?"
+            // convertido para string, pois selectoinARgs espera Arraylist
+            val whereArgs = arrayOf(id.toString())
+
+            db.delete(DataBaseConstants.TASK.TABLE_NAME, where, whereArgs)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
 }
