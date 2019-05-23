@@ -33,7 +33,7 @@ class TaskDataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         ${DataBaseConstants.TASK.COLUMNS.DUEDATE} TEXT
         );"""
 
-    private val insertPriorities = """INSERT INT ${DataBaseConstants.PRIORITY.TABLE_NAME}
+    private val insertPriorities = """INSERT INTO ${DataBaseConstants.PRIORITY.TABLE_NAME}
         VALUES (1, 'Baixa'), (2, 'Media'), (3, 'Alta'), (4, 'Crítica')"""
 
 
@@ -45,7 +45,7 @@ class TaskDataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         db.execSQL(createTableUser)
         db.execSQL(createTablePriority)
         db.execSQL(createTableTask)
-        insertPriorities
+        db.execSQL(insertPriorities)
 
     }
 
