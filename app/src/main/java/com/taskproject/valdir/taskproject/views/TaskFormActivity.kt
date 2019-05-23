@@ -1,13 +1,20 @@
 package com.taskproject.valdir.taskproject.views
 
 import android.app.DatePickerDialog
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.Toast
 import com.taskproject.valdir.taskproject.R
 import com.taskproject.valdir.taskproject.business.PriorityBusiness
+import com.taskproject.valdir.taskproject.business.TaskBusiness
+import com.taskproject.valdir.taskproject.constants.TaskConstants
+import com.taskproject.valdir.taskproject.entities.PriorityEntity
+import com.taskproject.valdir.taskproject.entities.TaskEntity
+import com.taskproject.valdir.taskproject.utils.SecurityPreferences
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_task_form.*
 import java.text.SimpleDateFormat
@@ -16,15 +23,23 @@ import java.util.*
 class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
     DatePickerDialog.OnDateSetListener{
 
-
-    private val mSimpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd/MM/YYYY")
     private lateinit var mPriorityBusiness: PriorityBusiness
+    private lateinit var mTaskBusiness: TaskBusiness
+    private lateinit var mSecurityPreferences: SecurityPreferences
+    private val mSimpleDateFormat: SimpleDateFormat = SimpleDateFormat("dd/MM/YYYY")
+
+    private var mLstPriorityEntity: MutableList<PriorityEntity> = mutableListOf()//buscar a lista de prioridades
+    private var mLstPriorityId: MutableList<Int> = mutableListOf()//buscar o id de prioridades
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_form)
 
         mPriorityBusiness = PriorityBusiness(this)
+        mTaskBusiness = TaskBusiness(this)
+        mSecurityPreferences = SecurityPreferences(this)
 
         setListener()
 
@@ -33,10 +48,11 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun setListener() {
         buttonDate.setOnClickListener(this)
+        buttonSave.setOnClickListener(this)
     }
 
     private fun loadPriorities() {
-        val lstPrioritiesEntity = mPriorityBusiness.getList()
+        mLstPriorityEntity = mPriorityBusiness.getList()
 
         /*  Pode ser usado dessa forma, mas será feito utilizando colletion
             val lst: MutableList<String> = mutableListOf()
@@ -44,7 +60,8 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
                 lst.add(lstPrioritiesEntity[i].description)
         */
 
-        val lstPriorities = lstPrioritiesEntity.map { it.description }
+        val lstPriorities = mLstPriorityEntity.map { it.description }
+        mLstPriorityId = mLstPriorityEntity.map{it.id}.toMutableList() //utilizado para pegar o  id da lista de prioridades
 
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lstPriorities)
 
@@ -63,10 +80,30 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onClick(v: View) {
         when(v.id){
-           R.id.buttonDate -> {
-            openDatePickerDialog()
-
+            R.id.buttonDate -> {
+                openDatePickerDialog()
+            }R.id.buttonSave ->{
+                handleSave()
         }
+    }
+    }
+
+    private fun handleSave() {
+
+        try{
+
+            // (1, 2, 3, 4)
+            val priorityId = mLstPriorityId[spinnerPriority.selectedItemPosition]
+            val complete = checkComplete.isChecked
+            val dueData = buttonDate.text.toString()
+            val description = editDescription.text.toString()
+            val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID).toInt()
+
+            val taskEntity = TaskEntity(0, userId, priorityId, description, dueData, complete)
+            mTaskBusiness.insert(taskEntity)
+
+        }catch (e: Exception){
+            Toast.makeText(this, getString(R.string.erro_inesperado_tentenovamente), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -24,4 +24,5 @@
     <string name="check_completa">Completa</string>
     <string name="clique_selecionar_data">Clique para selecionar a data</string>
     <string name="adicionar_tarefa">Adicionar tarefa</string>
+    <string name="erro_inesperado_tentenovamente">Erro inesperado, tente novamente</string>
 </resources>

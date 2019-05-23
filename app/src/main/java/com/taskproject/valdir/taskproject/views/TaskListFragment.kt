@@ -1,6 +1,9 @@
 package com.taskproject.valdir.taskproject.views
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +11,11 @@ import android.view.ViewGroup
 
 import com.taskproject.valdir.taskproject.R
 
-class TaskListFragment : Fragment() {
+class TaskListFragment : Fragment(), View.OnClickListener {
+
+    //framente necessita ter contexto explicito
+
+    private lateinit var mContext: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,12 +25,15 @@ class TaskListFragment : Fragment() {
         // }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_list, container, false)
+        val rootView =  inflater.inflate(R.layout.fragment_task_list, container, false)
+
+        rootView.findViewById<FloatingActionButton>(R.id.floatAddTask).setOnClickListener(this)
+        mContext = rootView.context
+
+        return rootView
     }
 
     companion object {
@@ -38,4 +48,15 @@ class TaskListFragment : Fragment() {
         //  }
         //   }
     }
+
+
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.floatAddTask -> {
+                //não pode ser utilizado como contexto this, deve ser explicito
+                startActivity(Intent(mContext, TaskFormActivity::class.java))
+            }
+        }
+    }
+
 }
