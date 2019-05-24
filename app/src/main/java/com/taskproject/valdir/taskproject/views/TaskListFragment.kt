@@ -5,17 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.taskproject.valdir.taskproject.R
+import com.taskproject.valdir.taskproject.adapter.TaskListAdapter
 
 class TaskListFragment : Fragment(), View.OnClickListener {
 
     //framente necessita ter contexto explicito
 
     private lateinit var mContext: Context
+    private lateinit var mRecyclerTaskList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +36,17 @@ class TaskListFragment : Fragment(), View.OnClickListener {
 
         rootView.findViewById<FloatingActionButton>(R.id.floatAddTask).setOnClickListener(this)
         mContext = rootView.context
+
+        // 1 - obter o elemento
+        mRecyclerTaskList = rootView.findViewById(R.id.recyclerTaskList)
+
+        // 2 - definir Adapter com itens de listagem
+        mRecyclerTaskList.adapter = TaskListAdapter()
+
+        // 3 - definir um layout
+        mRecyclerTaskList.layoutManager = LinearLayoutManager(mContext)
+
+
 
         return rootView
     }
