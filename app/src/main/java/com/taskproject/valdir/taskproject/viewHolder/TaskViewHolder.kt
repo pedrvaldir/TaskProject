@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.taskproject.valdir.taskproject.R
 import com.taskproject.valdir.taskproject.entities.TaskEntity
+import com.taskproject.valdir.taskproject.repository.PriorityCacheConstants
 
 class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -16,13 +17,11 @@ class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     fun bindData(task: TaskEntity){
         mTextDescription.text = task.description
-        mTextPriority.text = ""
+        mTextPriority.text = PriorityCacheConstants.getPriorityDescription(task.priorityId)
         mTextDate.text = task.dueData
 
         if (task.complete){
             mImageTask.setImageResource(R.drawable.ic_done)
         }
-
-
     }
 }
