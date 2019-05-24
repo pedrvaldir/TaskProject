@@ -13,6 +13,10 @@ import android.view.ViewGroup
 
 import com.taskproject.valdir.taskproject.R
 import com.taskproject.valdir.taskproject.adapter.TaskListAdapter
+import com.taskproject.valdir.taskproject.business.TaskBusiness
+import com.taskproject.valdir.taskproject.constants.TaskConstants
+import com.taskproject.valdir.taskproject.utils.SecurityPreferences
+
 
 class TaskListFragment : Fragment(), View.OnClickListener {
 
@@ -20,6 +24,9 @@ class TaskListFragment : Fragment(), View.OnClickListener {
 
     private lateinit var mContext: Context
     private lateinit var mRecyclerTaskList: RecyclerView
+    private lateinit var mTaskBusiness: TaskBusiness //busca os elementos
+    private lateinit var mSecurityPreferences: SecurityPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +44,26 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         rootView.findViewById<FloatingActionButton>(R.id.floatAddTask).setOnClickListener(this)
         mContext = rootView.context
 
-        // 1 - obter o elemento
+        //buscar os elementos
+        mTaskBusiness = TaskBusiness(mContext)
+        //buscar id
+        mSecurityPreferences = SecurityPreferences(mContext)
+
+        // 1 - Obter o elemento
         mRecyclerTaskList = rootView.findViewById(R.id.recyclerTaskList)
 
+        // 2 - Defini um adapter com os itens de listagem
+        val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID).toInt()
+        val taskList = mTaskBusiness.getList(userId)
+
+
+        // mock para teste
+        for(i in 0..50){
+            taskList.add(taskList[0].copy(description = "Descrição $i"))
+        }
+
         // 2 - definir Adapter com itens de listagem
-        mRecyclerTaskList.adapter = TaskListAdapter()
+        mRecyclerTaskList.adapter = TaskListAdapter(taskList)
 
         // 3 - definir um layout
         mRecyclerTaskList.layoutManager = LinearLayoutManager(mContext)

@@ -4,9 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.taskproject.valdir.taskproject.R
+import com.taskproject.valdir.taskproject.entities.TaskEntity
 import com.taskproject.valdir.taskproject.viewHolder.TaskViewHolder
 
-class TaskListAdapter: RecyclerView.Adapter<TaskViewHolder>() {
+class TaskListAdapter(val taskList: List<TaskEntity>): RecyclerView.Adapter<TaskViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         //inflar o layout item
         val context = parent?.context
@@ -18,10 +19,13 @@ class TaskListAdapter: RecyclerView.Adapter<TaskViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 0
+        return taskList.count()//valor da recyclerview
     }
 
-    override fun onBindViewHolder(p0: TaskViewHolder, p1: Int) {
+    //toda vez q uma linha é criada
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        val task = taskList[position]
+        holder.bindData(task)
 
     }
 }
