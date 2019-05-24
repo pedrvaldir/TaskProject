@@ -53,24 +53,28 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         mRecyclerTaskList = rootView.findViewById(R.id.recyclerTaskList)
 
         // 2 - Defini um adapter com os itens de listagem
-        val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID).toInt()
-        val taskList = mTaskBusiness.getList(userId)
+        //passado para o metodo resume só a instancia da linha abaixo que é feita com uma lista fazia, evita chamada do banco de dados e processamento desnecessário
+        mRecyclerTaskList.adapter = TaskListAdapter(mutableListOf())
 
-
-        // mock para teste
+        /* mock para teste
         for(i in 0..50){
             taskList.add(taskList[0].copy(description = "Descrição $i"))
-        }
-
-        // 2 - definir Adapter com itens de listagem
-        mRecyclerTaskList.adapter = TaskListAdapter(taskList)
+        } */
 
         // 3 - definir um layout
         mRecyclerTaskList.layoutManager = LinearLayoutManager(mContext)
 
 
-
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadTasks()
+    }
+
+    private fun loadTasks() {
+        mRecyclerTaskList.adapter = TaskListAdapter(mTaskBusiness.getList())
     }
 
     companion object {

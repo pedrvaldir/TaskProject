@@ -102,6 +102,8 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
             val taskEntity = TaskEntity(0, userId, priorityId, description, dueData, complete)
             mTaskBusiness.insert(taskEntity)
 
+            finish()
+
         }catch (e: Exception){
             Toast.makeText(this, getString(R.string.erro_inesperado_tentenovamente), Toast.LENGTH_SHORT).show()
         }
