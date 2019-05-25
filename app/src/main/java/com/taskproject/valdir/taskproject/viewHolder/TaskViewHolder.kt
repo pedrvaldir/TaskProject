@@ -5,10 +5,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.taskproject.valdir.taskproject.R
+import com.taskproject.valdir.taskproject.entities.OnTaskListFragmentInteractionListener
 import com.taskproject.valdir.taskproject.entities.TaskEntity
 import com.taskproject.valdir.taskproject.repository.PriorityCacheConstants
 
-class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+class TaskViewHolder(itemView: View, val listener: OnTaskListFragmentInteractionListener)
+    : RecyclerView.ViewHolder(itemView){
 
     private val mTextDescription: TextView = itemView.findViewById(R.id.textDescription)
     private val mTextPriority: TextView = itemView.findViewById(R.id.textPriority)
@@ -23,5 +25,10 @@ class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         if (task.complete){
             mImageTask.setImageResource(R.drawable.ic_done)
         }
+
+        //Evento de clique para edição
+        mTextDescription.setOnClickListener(View.OnClickListener {
+            listener.onListClick(task.id)
+        })
     }
 }

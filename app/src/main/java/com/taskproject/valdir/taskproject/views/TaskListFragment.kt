@@ -15,6 +15,7 @@ import com.taskproject.valdir.taskproject.R
 import com.taskproject.valdir.taskproject.adapter.TaskListAdapter
 import com.taskproject.valdir.taskproject.business.TaskBusiness
 import com.taskproject.valdir.taskproject.constants.TaskConstants
+import com.taskproject.valdir.taskproject.entities.OnTaskListFragmentInteractionListener
 import com.taskproject.valdir.taskproject.utils.SecurityPreferences
 
 
@@ -26,6 +27,7 @@ class TaskListFragment : Fragment(), View.OnClickListener {
     private lateinit var mRecyclerTaskList: RecyclerView
     private lateinit var mTaskBusiness: TaskBusiness //busca os elementos
     private lateinit var mSecurityPreferences: SecurityPreferences
+    private lateinit var mListener: OnTaskListFragmentInteractionListener
     private var mTaskFilter: Int = 0
 
 
@@ -51,6 +53,21 @@ class TaskListFragment : Fragment(), View.OnClickListener {
 
         //buscar os elementos
         mTaskBusiness = TaskBusiness(mContext)
+
+        //Classe anonima OnTaskListFragment
+        mListener = object : OnTaskListFragmentInteractionListener{
+            override fun onListClick(taskId: Int) {
+
+                val bundle: Bundle = Bundle()
+                bundle.putInt(TaskConstants.BUNDLE.TASKID, id)
+
+                val intent = Intent(mContext, TaskFormActivity::class.java)
+                intent.putExtras(bundle)
+
+                startActivity(Intent())
+            }
+
+        }
         //buscar id
         mSecurityPreferences = SecurityPreferences(mContext)
 
