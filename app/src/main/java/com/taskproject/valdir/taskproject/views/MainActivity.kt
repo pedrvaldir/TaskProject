@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun startDefaultFragment() {
-        val fragment: Fragment = TaskListFragment.newInstance()
+        val fragment: Fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.COMPLETE)
 
         supportFragmentManager.beginTransaction().replace(R.id.frameContent, fragment).commit()
     }
@@ -65,25 +65,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
-        var fragment: Fragment
+        var fragment: Fragment? = null
+        val id = item.itemId
 
         // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_done -> {
-                // Handle the camera action
+        when (id) {
+            // Handle the camera action
+            R.id.nav_done -> fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.COMPLETE)
+            R.id.nav_todo -> fragment = TaskListFragment.newInstance(TaskConstants.TASKFILTER.TODO)
+            R.id.nav_logout ->  handleLogout()
 
-            }
-            R.id.nav_todo -> {
-
-            }
-            R.id.nav_logout -> {
-                handleLogout()
-            }
         }
-        fragment = TaskListFragment.newInstance()
+
 
         val fragmentManager =  supportFragmentManager
-        fragmentManager.beginTransaction().replace(R.id.frameContent, fragment).commit()
+        fragmentManager.beginTransaction().replace(R.id.frameContent, fragment!!).commit()
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true

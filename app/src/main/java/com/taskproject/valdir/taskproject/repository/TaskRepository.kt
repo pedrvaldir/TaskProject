@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import com.taskproject.valdir.taskproject.constants.DataBaseConstants
+import com.taskproject.valdir.taskproject.constants.TaskConstants
 import com.taskproject.valdir.taskproject.entities.TaskEntity
 
 class TaskRepository private constructor(context: Context) {
@@ -74,7 +75,7 @@ class TaskRepository private constructor(context: Context) {
         return taskEntity
     }
 
-    fun getList(userId: Int): MutableList<TaskEntity> {
+    fun getList(userId: Int, taskFilter: Int): MutableList<TaskEntity> {
 
         val list = mutableListOf<TaskEntity>()
 
@@ -84,7 +85,8 @@ class TaskRepository private constructor(context: Context) {
 
             cursor = db.rawQuery(
                 "SELECT * FROM ${DataBaseConstants.TASK.TABLE_NAME} " +
-                        "WHERE ${DataBaseConstants.TASK.COLUMNS.USERID}", null
+                        "WHERE ${DataBaseConstants.TASK.COLUMNS.USERID} = $userId " +
+                        "AND ${DataBaseConstants.TASK.COLUMNS.COMPLETE} = $taskFilter", null
             )
 
             if (cursor.count > 0) {

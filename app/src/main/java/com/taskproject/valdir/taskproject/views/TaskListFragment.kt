@@ -26,10 +26,15 @@ class TaskListFragment : Fragment(), View.OnClickListener {
     private lateinit var mRecyclerTaskList: RecyclerView
     private lateinit var mTaskBusiness: TaskBusiness //busca os elementos
     private lateinit var mSecurityPreferences: SecurityPreferences
+    private var mTaskFilter: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (arguments != null){
+            mTaskFilter = arguments!!.getInt(TaskConstants.TASKFILTER.KEY)
+        }
+
         //  arguments?.let {
             //   mParam1 = it.getString(ARG_PARAM1)
             //   mParam2 = it.getString(ARG_PARAM2)
@@ -74,13 +79,19 @@ class TaskListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loadTasks() {
-        mRecyclerTaskList.adapter = TaskListAdapter(mTaskBusiness.getList())
+        mRecyclerTaskList.adapter = TaskListAdapter(mTaskBusiness.getList(mTaskFilter))
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(): TaskListFragment{
-           return TaskListFragment()
+        fun newInstance(taskfilter: Int): TaskListFragment{
+            val args: Bundle = Bundle()
+            args.putInt(TaskConstants.TASKFILTER.KEY, taskfilter)
+
+            val fragment = TaskListFragment()
+            fragment.arguments = args
+
+           return fragment
         }
         // TaskListFragment().apply {
                 //    arguments = Bundle().apply {
