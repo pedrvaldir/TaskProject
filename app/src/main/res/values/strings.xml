@@ -32,4 +32,6 @@
     <string name="perg_remov_task">Deseja remover?</string>
     <string name="remover_dialog">Remover</string>
     <string name="remove_cancela">Cancelar</string>
+    <string name="ola_toolbar">Olá,</string>
+    <string name="atualizar_tarefa">Atualizar tarefa!</string>
 </resources>

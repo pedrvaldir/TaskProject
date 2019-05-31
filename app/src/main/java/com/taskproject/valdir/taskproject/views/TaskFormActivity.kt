@@ -56,8 +56,7 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
         if (bundle!= null){
             mTaskId = bundle.getInt(TaskConstants.BUNDLE.TASKID, 0)
 
-
-            if (mTaskId != 0){
+            if (mTaskId != null){
                 val task = mTaskBusiness.get(mTaskId)
 
                 editDescription.setText(task?.description)
@@ -65,6 +64,8 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
                 if (task != null) {
                     checkComplete.isChecked = task.complete
                     spinnerPriority.setSelection(getIndex(task.priorityId))
+
+                    buttonSave.text = getString(R.string.atualizar_tarefa)
                 }
 
             }
@@ -143,7 +144,6 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
                 Toast.makeText(this, getString(R.string.tarefa_alterada), Toast.LENGTH_LONG).show()
 
             }
-
 
             finish()
 

@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="80dp"
-                android:text="Segunda, 20 de janeiro"/>
+                android:text="Sexta, 31 Maio"/>
 
     </android.support.design.widget.AppBarLayout>
     <!--
