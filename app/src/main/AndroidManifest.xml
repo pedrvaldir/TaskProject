@@ -15,7 +15,8 @@
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".views.RegisterActivity">
         </activity>
-        <activity android:name=".views.LoginActivity">
+        <activity android:name=".views.LoginActivity"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <action android:name="android.intent.action.MAIN"/>
