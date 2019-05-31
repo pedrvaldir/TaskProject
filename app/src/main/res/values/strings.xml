@@ -25,4 +25,6 @@
     <string name="clique_selecionar_data">Clique para selecionar a data</string>
     <string name="adicionar_tarefa">Adicionar tarefa</string>
     <string name="erro_inesperado_tentenovamente">Erro inesperado, tente novamente</string>
+    <string name="tarefa_incluida">Tarefa incluida com sucesso!</string>
+    <string name="tarefa_alterada">Tarefa alterada com sucesso!</string>
 </resources>

@@ -20,4 +20,8 @@ class TaskBusiness (val context: Context){
     }
 
     fun insert(taskEntity: TaskEntity) = mTaskRepository.insert(taskEntity)
+
+
+    fun update(taskEntity: TaskEntity) = mTaskRepository.update(taskEntity)
+
 }

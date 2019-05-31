@@ -134,7 +134,16 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
             val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID).toInt()
 
             val taskEntity = TaskEntity(mTaskId, userId, priorityId, description, dueData, complete)
-            mTaskBusiness.insert(taskEntity)
+
+            if (mTaskId == 0 ){
+                mTaskBusiness.insert(taskEntity)
+                Toast.makeText(this, getString(R.string.tarefa_incluida), Toast.LENGTH_LONG).show()
+            }else{
+                mTaskBusiness.update(taskEntity)
+                Toast.makeText(this, getString(R.string.tarefa_alterada), Toast.LENGTH_LONG).show()
+
+            }
+
 
             finish()
 
