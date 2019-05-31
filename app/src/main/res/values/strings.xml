@@ -27,4 +27,9 @@
     <string name="erro_inesperado_tentenovamente">Erro inesperado, tente novamente</string>
     <string name="tarefa_incluida">Tarefa incluida com sucesso!</string>
     <string name="tarefa_alterada">Tarefa alterada com sucesso!</string>
+    <string name="tarefa_removida">Tarefa removida om sucesso!</string>
+    <string name="msg_title_dialog_task">Remoção de tarefa</string>
+    <string name="perg_remov_task">Deseja remover?</string>
+    <string name="remover_dialog">Remover</string>
+    <string name="remove_cancela">Cancelar</string>
 </resources>

@@ -17,7 +17,7 @@ class TaskListAdapter(val taskList: List<TaskEntity>, val listener: OnTaskListFr
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.row_task_list, parent, false)
 
-        return TaskViewHolder(view, listener)
+        return TaskViewHolder(view, context,  listener)
 
     }
 

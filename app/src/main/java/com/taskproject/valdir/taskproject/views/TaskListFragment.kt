@@ -62,6 +62,7 @@ class TaskListFragment : Fragment(), View.OnClickListener {
 
         //Classe anonima OnTaskListFragment
         mListener = object : OnTaskListFragmentInteractionListener{
+
             override fun onListClick(taskId: Int) {
 
 
@@ -76,6 +77,11 @@ class TaskListFragment : Fragment(), View.OnClickListener {
 
             }
 
+            override fun onDeleteClick(taskId: Int) {
+                mTaskBusiness.delete(taskId)
+                loadTasks()
+                Toast.makeText(mContext, getString(R.string.tarefa_removida), Toast.LENGTH_LONG ).show()
+            }
         }
 
 

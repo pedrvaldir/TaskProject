@@ -24,4 +24,6 @@ class TaskBusiness (val context: Context){
 
     fun update(taskEntity: TaskEntity) = mTaskRepository.update(taskEntity)
 
+    fun delete(taskId: Int) = mTaskRepository.delete(taskId)
+
 }
