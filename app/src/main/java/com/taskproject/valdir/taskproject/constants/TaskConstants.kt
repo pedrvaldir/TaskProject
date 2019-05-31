@@ -14,7 +14,7 @@ class TaskConstants {
         val TODO = 0
     }
 
-    object   BUNDLE{
+    object BUNDLE {
         val TASKID = "filterTaskId"
     }
 }

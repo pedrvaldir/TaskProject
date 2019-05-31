@@ -35,10 +35,9 @@ class TaskRepository private constructor(context: Context) {
 
             val db = mTaskDataBaseHelper.readableDatabase
             val projection = arrayOf(
-                DataBaseConstants.TASK.COLUMNS.ID,
                 DataBaseConstants.TASK.COLUMNS.USERID,
-                DataBaseConstants.TASK.COLUMNS.PRIORITYID,
                 DataBaseConstants.TASK.COLUMNS.DESCRIPTION,
+                DataBaseConstants.TASK.COLUMNS.PRIORITYID,
                 DataBaseConstants.TASK.COLUMNS.DUEDATE,
                 DataBaseConstants.TASK.COLUMNS.COMPLETE
             )
@@ -50,13 +49,12 @@ class TaskRepository private constructor(context: Context) {
 
             //outra forma de consultar dados :         db.rawQuery("select * from user where email = gabriel", null)
             //Retorno de query cursor
-            cursor = db.query(DataBaseConstants.USER.TABLE_NAME, projection, selection, selectionArgs, null, null, null)
+            cursor = db.query(DataBaseConstants.TASK.TABLE_NAME, projection, selection, selectionArgs, null, null, null)
 
             if (cursor.count > 0) {
                 //mover para primeiro registro
                 cursor.moveToFirst()
 
-                val taskId = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.TASK.COLUMNS.ID))
                 val userId = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.TASK.COLUMNS.USERID))
                 val priorityId = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.TASK.COLUMNS.PRIORITYID))
                 val description = cursor.getString(cursor.getColumnIndex(DataBaseConstants.TASK.COLUMNS.DESCRIPTION))

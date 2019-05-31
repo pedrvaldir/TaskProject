@@ -6,10 +6,12 @@ import com.taskproject.valdir.taskproject.entities.TaskEntity
 import com.taskproject.valdir.taskproject.repository.TaskRepository
 import com.taskproject.valdir.taskproject.utils.SecurityPreferences
 
-class TaskBusiness (context: Context){
+class TaskBusiness (val context: Context){
 
     private val mTaskRepository: TaskRepository = TaskRepository.getInstance(context)
     private val mSecurityPreferences: SecurityPreferences = SecurityPreferences(context)
+
+    fun get(id: Int) = mTaskRepository.get(id)
 
     //faz a listagem das tarefas de acordo com o usuário
     fun getList(taskFilter: Int) : MutableList<TaskEntity> {

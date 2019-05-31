@@ -30,7 +30,7 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
 
     private var mLstPriorityEntity: MutableList<PriorityEntity> = mutableListOf()//buscar a lista de prioridades
     private var mLstPriorityId: MutableList<Int> = mutableListOf()//buscar o id de prioridades
-
+    private var mTaskId: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,13 +42,47 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
         mSecurityPreferences = SecurityPreferences(this)
 
         setListener()
-
         loadPriorities()
+        loadDatafromActivity()
     }
 
     private fun setListener() {
         buttonDate.setOnClickListener(this)
         buttonSave.setOnClickListener(this)
+    }
+
+    private fun loadDatafromActivity(){
+        val bundle = intent.extras
+        if (bundle!= null){
+            mTaskId = bundle.getInt(TaskConstants.BUNDLE.TASKID, 0)
+
+
+            if (mTaskId != 0){
+                val task = mTaskBusiness.get(mTaskId)
+
+                editDescription.setText(task?.description)
+                buttonDate.text = task?.dueData
+                if (task != null) {
+                    checkComplete.isChecked = task.complete
+                    spinnerPriority.setSelection(getIndex(task.priorityId))
+                }
+
+            }
+        }
+
+
+
+    }
+
+    private fun getIndex(id: Int): Int{
+        var index = 0
+        for(i in 0..mLstPriorityEntity.size){
+            if (mLstPriorityEntity[i].id == id){
+                index = i
+                break
+            }
+        }
+        return index
     }
 
     private fun loadPriorities() {
@@ -99,7 +133,7 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener,
             val description = editDescription.text.toString()
             val userId = mSecurityPreferences.getStoredString(TaskConstants.KEY.USER_ID).toInt()
 
-            val taskEntity = TaskEntity(0, userId, priorityId, description, dueData, complete)
+            val taskEntity = TaskEntity(mTaskId, userId, priorityId, description, dueData, complete)
             mTaskBusiness.insert(taskEntity)
 
             finish()

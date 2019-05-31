@@ -7,9 +7,11 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.taskproject.valdir.taskproject.R
 import com.taskproject.valdir.taskproject.adapter.TaskListAdapter
@@ -54,29 +56,35 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         //buscar os elementos
         mTaskBusiness = TaskBusiness(mContext)
 
+        //buscar id
+        mSecurityPreferences = SecurityPreferences(mContext)
+
+
         //Classe anonima OnTaskListFragment
         mListener = object : OnTaskListFragmentInteractionListener{
             override fun onListClick(taskId: Int) {
 
+
                 val bundle: Bundle = Bundle()
-                bundle.putInt(TaskConstants.BUNDLE.TASKID, id)
+                bundle.putInt(TaskConstants.BUNDLE.TASKID, taskId)
 
                 val intent = Intent(mContext, TaskFormActivity::class.java)
                 intent.putExtras(bundle)
 
-                startActivity(Intent())
+                startActivity(intent)
+
+
             }
 
         }
-        //buscar id
-        mSecurityPreferences = SecurityPreferences(mContext)
+
 
         // 1 - Obter o elemento
         mRecyclerTaskList = rootView.findViewById(R.id.recyclerTaskList)
 
         // 2 - Defini um adapter com os itens de listagem
         //passado para o metodo resume só a instancia da linha abaixo que é feita com uma lista fazia, evita chamada do banco de dados e processamento desnecessário
-        mRecyclerTaskList.adapter = TaskListAdapter(mutableListOf())
+        mRecyclerTaskList.adapter = TaskListAdapter(mutableListOf(), mListener)
 
         /* mock para teste
         for(i in 0..50){
@@ -84,9 +92,7 @@ class TaskListFragment : Fragment(), View.OnClickListener {
         } */
 
         // 3 - definir um layout
-        mRecyclerTaskList.layoutManager = LinearLayoutManager(mContext)
-
-
+        mRecyclerTaskList.layoutManager =  LinearLayoutManager(mContext)
         return rootView
     }
 
@@ -96,7 +102,7 @@ class TaskListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun loadTasks() {
-        mRecyclerTaskList.adapter = TaskListAdapter(mTaskBusiness.getList(mTaskFilter))
+        mRecyclerTaskList.adapter = TaskListAdapter(mTaskBusiness.getList(mTaskFilter), mListener)
     }
 
     companion object {

@@ -4,17 +4,20 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.taskproject.valdir.taskproject.R
+import com.taskproject.valdir.taskproject.entities.OnTaskListFragmentInteractionListener
 import com.taskproject.valdir.taskproject.entities.TaskEntity
 import com.taskproject.valdir.taskproject.viewHolder.TaskViewHolder
 
-class TaskListAdapter(val taskList: List<TaskEntity>): RecyclerView.Adapter<TaskViewHolder>() {
+class TaskListAdapter(val taskList: List<TaskEntity>, val listener: OnTaskListFragmentInteractionListener) :
+    RecyclerView.Adapter<TaskViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         //inflar o layout item
         val context = parent?.context
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.row_task_list, parent, false)
 
-        return TaskViewHolder(view)
+        return TaskViewHolder(view, listener)
 
     }
 
