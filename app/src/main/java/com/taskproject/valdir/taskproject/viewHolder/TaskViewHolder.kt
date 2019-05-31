@@ -4,12 +4,10 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.taskproject.valdir.taskproject.R
 import com.taskproject.valdir.taskproject.entities.OnTaskListFragmentInteractionListener
 import com.taskproject.valdir.taskproject.entities.TaskEntity
@@ -22,7 +20,7 @@ class TaskViewHolder(itemView: View, val context: Context, val listener: OnTaskL
     private val mTextPriority: TextView = itemView.findViewById(R.id.textPriority)
     private val mTextDate: TextView = itemView.findViewById(R.id.textDueDate)
     private val mImageTask: ImageView = itemView.findViewById(R.id.imageTask)
-    private val mRelativeLayout: RelativeLayout = itemView.findViewById(R.id.rvRowTask)
+    private val rowTaskItem: RelativeLayout = itemView.findViewById(R.id.rvRowTask)
 
     fun bindData(task: TaskEntity){
         mTextDescription.text = task.description
@@ -33,14 +31,24 @@ class TaskViewHolder(itemView: View, val context: Context, val listener: OnTaskL
             mImageTask.setImageResource(R.drawable.ic_done)
         }
 
-        mRelativeLayout.setOnClickListener {
+        rowTaskItem.setOnClickListener {
             listener.onListClick(task.id)
         }
 
-        mRelativeLayout.setOnLongClickListener{
+        rowTaskItem.setOnLongClickListener{
             showConfirmationDialog(task)
             true
         }
+
+        mImageTask.setOnClickListener{
+            if (task.complete){
+                listener.onUncompleteClick(task.id)
+            }else{
+                listener.onCompleteClick(task.id)
+            }
+        }
+
+
     }
 
     private fun showConfirmationDialog(task: TaskEntity){
