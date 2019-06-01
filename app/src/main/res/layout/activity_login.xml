@@ -65,7 +65,7 @@
             android:text="Cadastre-se"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3"
+            android:id="@+id/textRegister"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline3"
             style="@style/mWhiteTextView" android:textStyle="bold"/>
 

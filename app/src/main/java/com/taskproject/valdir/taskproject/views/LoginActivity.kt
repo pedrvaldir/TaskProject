@@ -43,12 +43,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setListeners() {
         btnLogin.setOnClickListener(this)
+        textRegister.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when (v.id){
             R.id.btnLogin ->{
                 handleLogin()
+            }
+            R.id.textRegister ->{
+                startActivity(Intent(this,  RegisterActivity::class.java))
             }
         }
     }
